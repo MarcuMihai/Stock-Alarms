@@ -19,8 +19,8 @@ public class UserBuilder {
 
     public static User toEntity(UserDTO userDTO) {
         return new User(userDTO.getId(),
-                userDTO.getFirst_name(),
-                userDTO.getLast_name(),
+                userDTO.getFirstName(),
+                userDTO.getLastName(),
                 userDTO.getEmail(),
                 userDTO.getPassword(),
                 userDTO.getAlarms());
