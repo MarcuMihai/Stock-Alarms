@@ -13,7 +13,8 @@ public class AlarmBuilder {
                 alarm.getDefinitionPrice(),
                 alarm.getCurrentPrice(),
                 alarm.getVariancePercentage(),
-                alarm.getTargetPercentage(),
+                alarm.getLowTargetPercentage(),
+                alarm.getHighTargetPercentage(),
                 alarm.getActive());
     }
 
@@ -23,8 +24,8 @@ public class AlarmBuilder {
                 alarmDTO.getStock(),
                 alarmDTO.getDefinitionPrice(),
                 alarmDTO.getCurrentPrice(),
-                alarmDTO.getVariancePercentage(),
-                alarmDTO.getTargetPercentage(),
+                alarmDTO.getLowTargetPercentage(),
+                alarmDTO.getHighTargetPercentage(),
                 alarmDTO.getActive());
     }
 }

@@ -1,9 +1,11 @@
 package application.services;
 
+import application.builders.AlarmBuilder;
 import application.builders.StockBuilder;
 import application.dtos.AddAlarmDTO;
 import application.dtos.AlarmDTO;
 import application.dtos.StockDTO;
+import application.entities.Alarm;
 import application.entities.Stock;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StockService {
@@ -56,33 +59,35 @@ public class StockService {
 
     @Scheduled(fixedRateString = "${polling.interval.seconds}000")
     public void monitorStockPrices() {
-        List<AlarmDTO> alarms = alarmService.getAlarms();
-        //the map is used to save the current price of each stock so the function does not need to call the api for the same stock multiple times
+        List<AlarmDTO> alarmDTOS = alarmService.getAlarms();
+        List<Alarm> alarms = alarmDTOS.stream().map(AlarmBuilder::toEntity).collect(Collectors.toList());
+        //the hashmap is used to save the current price of each stock so the function does not need to call the api for the same stock multiple times
         Map<String, Float> monitoredStocks = new HashMap<>();
-        for (AlarmDTO alarmDTO: alarms
+        for (Alarm alarm: alarms
              ) {
-            if (alarmDTO.getActive()) {
-                Stock stock = new Stock(alarmDTO.getStock(), alarmDTO.getCurrentPrice());
-                if (!monitoredStocks.containsKey(alarmDTO.getStock())) {
-                    stock = StockBuilder.toEntity(getStockBySymbol(alarmDTO.getStock()));
-                    monitoredStocks.put(alarmDTO.getStock(), stock.getCurrentPrice());
+            if (alarm.getActive()) {
+                Stock stock = new Stock(alarm.getStock(), alarm.getCurrentPrice());
+                if (!monitoredStocks.containsKey(alarm.getStock())) {
+                    stock = StockBuilder.toEntity(getStockBySymbol(alarm.getStock()));
+                    monitoredStocks.put(alarm.getStock(), stock.getCurrentPrice());
                 } else {
-                    stock.setCurrentPrice(monitoredStocks.get(alarmDTO.getStock()));
+                    stock.setCurrentPrice(monitoredStocks.get(alarm.getStock()));
                 }
-                alarmDTO.setCurrentPrice(stock.getCurrentPrice());
-                alarmDTO.setVariancePercentage((alarmDTO.getCurrentPrice() - alarmDTO.getDefinitionPrice()) / alarmDTO.getDefinitionPrice());
-                if (alarmDTO.getVariancePercentage() >= alarmDTO.getTargetPercentage()) {
+                alarm.setCurrentPrice(stock.getCurrentPrice());
+                alarm.setVariancePercentage();
+                if (alarm.getVariancePercentage() <= alarm.getLowTargetPercentage() || alarm.getVariancePercentage() >= alarm.getHighTargetPercentage()) {
                     //sendEmail(User user, Alarm alarm);
-                    alarmDTO.setActive(false);
+                    alarm.setActive(false);
                 }
-                alarmService.update(new AddAlarmDTO(alarmDTO.getId(),
-                        alarmDTO.getUser().getId(),
-                        alarmDTO.getStock(),
-                        alarmDTO.getDefinitionPrice(),
-                        alarmDTO.getCurrentPrice(),
-                        alarmDTO.getVariancePercentage(),
-                        alarmDTO.getTargetPercentage(),
-                        alarmDTO.getActive()));
+                alarmService.update(new AddAlarmDTO(alarm.getId(),
+                        alarm.getUser().getId(),
+                        alarm.getStock(),
+                        alarm.getDefinitionPrice(),
+                        alarm.getCurrentPrice(),
+                        alarm.getVariancePercentage(),
+                        alarm.getLowTargetPercentage(),
+                        alarm.getHighTargetPercentage(),
+                        alarm.getActive()));
             }
         }
         LOGGER.info("\nPolling function done successfully\n");

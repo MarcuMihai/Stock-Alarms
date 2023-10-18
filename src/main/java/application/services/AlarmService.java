@@ -53,7 +53,8 @@ public class AlarmService {
                 addAlarmDTO.getDefinitionPrice(),
                 addAlarmDTO.getCurrentPrice(),
                 addAlarmDTO.getVariancePercentage(),
-                addAlarmDTO.getTargetPercentage(),
+                addAlarmDTO.getLowTargetPercentage(),
+                addAlarmDTO.getHighTargetPercentage(),
                 addAlarmDTO.getActive()
         );
         if (!alarmRepository.findByUserAndStock(alarmDTO.getUser().getId(), alarmDTO.getStock()).isEmpty()) {
@@ -74,7 +75,8 @@ public class AlarmService {
                 addAlarmDTO.getDefinitionPrice(),
                 addAlarmDTO.getCurrentPrice(),
                 addAlarmDTO.getVariancePercentage(),
-                addAlarmDTO.getTargetPercentage(),
+                addAlarmDTO.getLowTargetPercentage(),
+                addAlarmDTO.getHighTargetPercentage(),
                 addAlarmDTO.getActive()
         );
         if (alarmRepository.findByUserAndStock(alarmDTO.getUser().getId(), alarmDTO.getStock()).isEmpty()) {

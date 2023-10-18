@@ -11,20 +11,22 @@ public class AlarmDTO {
     private float definitionPrice;
     private float currentPrice;
     private float variancePercentage;
-    private float targetPercentage;
+    private float lowTargetPercentage;
+    private float highTargetPercentage;
     private boolean active;
 
     public AlarmDTO() {
     }
 
-    public AlarmDTO(UUID id, User user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
+    public AlarmDTO(UUID id, User user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float lowTargetPercentage, float highTargetPercentage, boolean active) {
         this.id = id;
         this.user = user;
         this.stock = stock;
         this.definitionPrice = definitionPrice;
         this.currentPrice = currentPrice;
         this.variancePercentage = variancePercentage;
-        this.targetPercentage = targetPercentage;
+        this.lowTargetPercentage = lowTargetPercentage;
+        this.highTargetPercentage = highTargetPercentage;
         this.active = active;
     }
 
@@ -76,12 +78,20 @@ public class AlarmDTO {
         this.variancePercentage = variancePercentage;
     }
 
-    public float getTargetPercentage() {
-        return targetPercentage;
+    public float getLowTargetPercentage() {
+        return lowTargetPercentage;
     }
 
-    public void setTargetPercentage(float targetPercentage) {
-        this.targetPercentage = targetPercentage;
+    public void setLowTargetPercentage(float lowTargetPercentage) {
+        this.lowTargetPercentage = lowTargetPercentage;
+    }
+
+    public float getHighTargetPercentage() {
+        return highTargetPercentage;
+    }
+
+    public void setHighTargetPercentage(float highTargetPercentage) {
+        this.highTargetPercentage = highTargetPercentage;
     }
 
     public boolean getActive() {

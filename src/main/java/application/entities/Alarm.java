@@ -32,22 +32,26 @@ public class Alarm implements Serializable {
     @Column(name = "variance_percentage", nullable = false)
     private float variancePercentage;
 
-    @Column(name = "target_percentage", nullable = false)
-    private float targetPercentage;
+    @Column(name = "low_target_percentage", nullable = false)
+    private float lowTargetPercentage;
+
+    @Column(name = "high_target_percentage", nullable = false)
+    private float highTargetPercentage;
 
     @Column(name = "active", nullable = false)
     private boolean active;
 
     public Alarm() {}
 
-    public Alarm(UUID id, User user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
+    public Alarm(UUID id, User user, String stock, float definitionPrice, float currentPrice, float lowTargetPercentage, float highTargetPercentage, boolean active) {
         this.id = id;
         this.user = user;
         this.stock = stock;
         this.definitionPrice = definitionPrice;
         this.currentPrice = currentPrice;
-        this.variancePercentage = variancePercentage;
-        this.targetPercentage = targetPercentage;
+        this.variancePercentage = ((currentPrice-definitionPrice)/definitionPrice)*100;
+        this.lowTargetPercentage = lowTargetPercentage;
+        this.highTargetPercentage = highTargetPercentage;
         this.active = active;
     }
 
@@ -95,16 +99,24 @@ public class Alarm implements Serializable {
         return variancePercentage;
     }
 
-    public void setVariancePercentage(float variancePercentage) {
-        this.variancePercentage = variancePercentage;
+    public void setVariancePercentage() {
+        this.variancePercentage = ((currentPrice-definitionPrice)/definitionPrice)*100;
     }
 
-    public float getTargetPercentage() {
-        return targetPercentage;
+    public float getLowTargetPercentage() {
+        return lowTargetPercentage;
     }
 
-    public void setTargetPercentage(float targetPercentage) {
-        this.targetPercentage = targetPercentage;
+    public void setLowTargetPercentage(float lowTargetPercentage) {
+        this.lowTargetPercentage = lowTargetPercentage;
+    }
+
+    public float getHighTargetPercentage() {
+        return highTargetPercentage;
+    }
+
+    public void setHighTargetPercentage(float highTargetPercentage) {
+        this.highTargetPercentage = highTargetPercentage;
     }
 
     public boolean getActive() {
