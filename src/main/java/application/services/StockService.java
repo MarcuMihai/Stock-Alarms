@@ -27,6 +27,7 @@ public class StockService {
 
     private final RestTemplate restTemplate;
     private final AlarmService alarmService;
+    private final EmailService emailService;
 
     private static final String baseUrl = "https://www.alphavantage.co";
     private static final String apiKey = "NPDF5F31P6WBH5LD";
@@ -34,10 +35,11 @@ public class StockService {
     private final int pollingInterval;
 
     @Autowired
-    public StockService(AlarmService alarmService, @Value("${polling.interval.seconds}") int pollingInterval, RestTemplate restTemplate) {
+    public StockService(AlarmService alarmService, @Value("${polling.interval.seconds}") int pollingInterval, RestTemplate restTemplate, EmailService emailService) {
         this.alarmService = alarmService;
         this.pollingInterval = pollingInterval;
         this.restTemplate = restTemplate;
+        this.emailService = emailService;
     }
 
     public StockDTO getStockBySymbol(String symbol) {
@@ -76,7 +78,7 @@ public class StockService {
                 alarm.setCurrentPrice(stock.getCurrentPrice());
                 alarm.setVariancePercentage();
                 if (alarm.getVariancePercentage() <= alarm.getLowTargetPercentage() || alarm.getVariancePercentage() >= alarm.getHighTargetPercentage()) {
-                    //sendEmail(User user, Alarm alarm);
+                    emailService.sendEmail(alarm.getUser(), alarm);
                     alarm.setActive(false);
                 }
                 alarmService.update(new AddAlarmDTO(alarm.getId(),
