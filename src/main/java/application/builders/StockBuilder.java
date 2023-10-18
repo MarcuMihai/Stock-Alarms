@@ -8,16 +8,14 @@ public class StockBuilder {
     }
 
     public static StockDTO toDTO(Stock stock) {
-        return new StockDTO(stock.getId(),
-                stock.getName(),
-                stock.getCurrentPrice(),
-                stock.getAlarms());
+        return new StockDTO(
+                stock.getSymbol(),
+                stock.getCurrentPrice());
     }
 
     public static Stock toEntity(StockDTO stockDTO) {
-        return new Stock(stockDTO.getId(),
-                stockDTO.getName(),
-                stockDTO.getCurrentPrice(),
-                stockDTO.getAlarms());
+        return new Stock(
+                stockDTO.getSymbol(),
+                stockDTO.getCurrentPrice());
     }
 }

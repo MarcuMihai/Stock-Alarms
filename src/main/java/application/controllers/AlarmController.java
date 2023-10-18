@@ -63,9 +63,9 @@ public class AlarmController {
         return new ResponseEntity<>(alarmDTOs, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/stock/{stockId}")
-    public ResponseEntity<List<AlarmDTO>> getAlarmsByStock(@PathVariable("stockId") UUID stockId) {
-        List<AlarmDTO> alarmDTOs = alarmService.getAlarmsByStock(stockId);
+    @GetMapping(value = "/stock/{stockSymbol}")
+    public ResponseEntity<List<AlarmDTO>> getAlarmsByStock(@PathVariable("stockSymbol") String stockSymbol) {
+        List<AlarmDTO> alarmDTOs = alarmService.getAlarmsByStock(stockSymbol);
         return new ResponseEntity<>(alarmDTOs, HttpStatus.OK);
     }
 }

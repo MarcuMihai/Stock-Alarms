@@ -6,7 +6,7 @@ public class AddAlarmDTO {
 
     private UUID id;
     private UUID user;
-    private UUID stock;
+    private String stock;
     private float definitionPrice;
     private float currentPrice;
     private float variancePercentage;
@@ -16,7 +16,7 @@ public class AddAlarmDTO {
     public AddAlarmDTO() {
     }
 
-    public AddAlarmDTO(UUID id, UUID user, UUID stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
+    public AddAlarmDTO(UUID id, UUID user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
         this.id = id;
         this.user = user;
         this.stock = stock;
@@ -43,11 +43,11 @@ public class AddAlarmDTO {
         this.user = user;
     }
 
-    public UUID getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(UUID stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 

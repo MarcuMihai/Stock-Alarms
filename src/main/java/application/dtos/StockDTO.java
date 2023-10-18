@@ -1,40 +1,23 @@
 package application.dtos;
 
-import application.entities.Alarm;
-
-import java.util.List;
-import java.util.UUID;
-
 public class StockDTO {
-    private UUID id;
-    private String name;
+    private String symbol;
     private float currentPrice;
-    private List<Alarm> alarms;
 
     public StockDTO() {
     }
 
-    public StockDTO(UUID id, String name, float currentPrice, List<Alarm> alarms) {
-        this.id = id;
-        this.name = name;
+    public StockDTO(String symbol, float currentPrice) {
+        this.symbol = symbol;
         this.currentPrice = currentPrice;
-        this.alarms = alarms;
     }
 
-    public UUID getId() {
-        return id;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public float getCurrentPrice() {
@@ -45,11 +28,4 @@ public class StockDTO {
         this.currentPrice = currentPrice;
     }
 
-    public List<Alarm> getAlarms() {
-        return alarms;
-    }
-
-    public void setAlarms(List<Alarm> alarms) {
-        this.alarms = alarms;
-    }
 }

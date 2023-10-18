@@ -1,6 +1,5 @@
 package application.dtos;
 
-import application.entities.Stock;
 import application.entities.User;
 
 import java.util.UUID;
@@ -8,7 +7,7 @@ import java.util.UUID;
 public class AlarmDTO {
     private UUID id;
     private User user;
-    private Stock stock;
+    private String stock;
     private float definitionPrice;
     private float currentPrice;
     private float variancePercentage;
@@ -18,7 +17,7 @@ public class AlarmDTO {
     public AlarmDTO() {
     }
 
-    public AlarmDTO(UUID id, User user, Stock stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
+    public AlarmDTO(UUID id, User user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
         this.id = id;
         this.user = user;
         this.stock = stock;
@@ -45,11 +44,11 @@ public class AlarmDTO {
         this.user = user;
     }
 
-    public Stock getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(Stock stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 

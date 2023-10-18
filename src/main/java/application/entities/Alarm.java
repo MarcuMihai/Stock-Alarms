@@ -20,9 +20,8 @@ public class Alarm implements Serializable {
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne()
-    @JoinColumn(name="stock_id")
-    private Stock stock;
+    @Column(name = "stock", nullable = false)
+    private String stock;
 
     @Column(name = "definition_price", nullable = false)
     private float definitionPrice;
@@ -41,7 +40,7 @@ public class Alarm implements Serializable {
 
     public Alarm() {}
 
-    public Alarm(UUID id, User user, Stock stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
+    public Alarm(UUID id, User user, String stock, float definitionPrice, float currentPrice, float variancePercentage, float targetPercentage, boolean active) {
         this.id = id;
         this.user = user;
         this.stock = stock;
@@ -68,11 +67,11 @@ public class Alarm implements Serializable {
         this.user = user;
     }
 
-    public Stock getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(Stock stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 

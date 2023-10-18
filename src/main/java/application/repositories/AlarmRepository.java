@@ -11,9 +11,9 @@ public interface AlarmRepository extends JpaRepository<Alarm, UUID> {
     @Query("SELECT a FROM Alarm a where a.user.id=:id")
     List<Alarm> findByUser(UUID id);
 
-    @Query("SELECT a FROM Alarm a where a.stock.id=:id")
-    List<Alarm> findByStock(UUID id);
+    @Query("SELECT a FROM Alarm a where a.stock=:stockSymbol")
+    List<Alarm> findByStock(String stockSymbol);
 
-    @Query("SELECT a FROM Alarm a where a.user.id=:userId and a.stock.id=:stockId")
-    List<Alarm> findByUserAndStock(UUID userId, UUID stockId);
+    @Query("SELECT a FROM Alarm a where a.user.id=:userId and a.stock=:stockSymbol")
+    List<Alarm> findByUserAndStock(UUID userId, String stockSymbol);
 }
